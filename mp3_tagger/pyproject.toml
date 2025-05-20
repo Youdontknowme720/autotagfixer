@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mp3-tagger"
+version = "0.1.0"
+description = "Tool to set missing ID3 tags for MP3 files"
+authors = [{ name = "Nico" }]
+dependencies = ["mutagen"]
+requires-python = ">=3.8"
+
+[project.scripts]
+tagger = "tagger.__main__:main"
