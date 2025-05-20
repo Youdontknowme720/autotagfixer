@@ -1,9 +1,8 @@
+import argparse
 import sys
+from pathlib import Path
 
 from mutagen.mp3 import EasyMP3
-import argparse
-import os
-from pathlib import Path
 
 parser = argparse.ArgumentParser(description="Sets automatically MP3-tags")
 parser.add_argument(
