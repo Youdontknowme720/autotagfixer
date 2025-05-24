@@ -23,21 +23,33 @@ class AutoUI:
             "Artist": ttk.StringVar()
         }
 
-        for label, var in self.tags.items():
-            ttk.Label(root, text=label).pack(pady=2)
-            ttk.Entry(root, textvariable=var, width=50).pack()
-
-        ttk.Button(root, text="Set Tags", command=self.set_mp3_tags, style=OUTLINE).pack(pady=5)
-        self.status_label = ttk.Label(root, text="")
-        self.status_label.pack(pady=5)
+        self.tag_frame = ttk.Frame(root)
+        self.tag_frame.pack(pady=10)
 
     def select_file(self):
         path = filedialog.askopenfilename(filetypes=[('MP3 Files', '*.mp3')])
         if path:
             self.file_path.set(path)
+            self.update_tags_ui()
+
+    def update_tags_ui(self):
+        for widget in self.tag_frame.winfo_children():
+            widget.destroy()
+
+        for label, var in self.tags.items():
+            ttk.Label(self.tag_frame, text=label).pack(anchor='w')
+            ttk.Entry(self.tag_frame, textvariable=var, width=50).pack(pady=(0, 5))
+
+
+        ttk.Button(self.tag_frame, text="Set Tags", command=self.set_mp3_tags, bootstyle=SUCCESS).pack(pady=10)
+
+        self.status_label = ttk.Label(self.tag_frame, text="", bootstyle=INFO)
+        self.status_label.pack()
+
 
     def set_mp3_tags(self):
         mp3_tagger.set_path(Path(self.file_path.get()))
+        print(mp3_tagger.path)
         title = self.tags['Title'].get()
         artist = self.tags['Artist'].get()
         try:

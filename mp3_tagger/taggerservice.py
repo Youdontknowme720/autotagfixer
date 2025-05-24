@@ -12,9 +12,12 @@ class MP3Tagger:
 
     def check_file(self):
         if not self.path.is_file() or not self.path.exists():
+            print("No such file")
             return False
         if self.path.suffix.lower() != '.mp3':
+            print("No mp3 file selected")
             return False
+        return True
 
 
     def set_path(self, path: Path):
@@ -23,8 +26,9 @@ class MP3Tagger:
     def set_tags(self, title: str, artist: str):
         if not self.check_file():
             print("Could not set tags")
-        audio = EasyMP3(self.path)
-        audio['title'] = title
-        audio['artist'] = artist
-        audio.save()
-        print(f"Successfully tagged: '{title}' by '{artist}'")
+        else:
+            audio = EasyMP3(self.path)
+            audio['title'] = title
+            audio['artist'] = artist
+            audio.save()
+            print(f"Successfully tagged: '{title}' by '{artist}'")
